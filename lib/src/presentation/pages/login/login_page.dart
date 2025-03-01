@@ -24,25 +24,44 @@ class LoginPage extends StatelessWidget {
     ));
   }
 
-  Widget _body() => Column(
-        children: [
-          SizedBox(height: _size.height * .09),
-          logoLoginView(size: _size),
-          SizedBox(height: _size.height * .05),
-          txtLoginView(size: _size),
-          formLoginView(size: _size),
-          SizedBox(height: _size.height * .02),
-          googleBtnloginView(),
-          SizedBox(height: _size.height * .02),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextButton(
-                onPressed: () {},
-                child: Text(
-                  "Crear cuenta",
-                  style: TextStyle(decoration: TextDecoration.underline),
-                )),
-          )
-        ],
+  Widget _body() => BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          final c = context.read<LoginCubit>();
+          return Column(
+            children: [
+              SizedBox(height: _size.height * .06),
+              logoLoginView(size: _size),
+              SizedBox(height: _size.height * .05),
+              txtLoginView(size: _size),
+              formLoginView(size: _size),
+              SizedBox(height: _size.height * .02),
+              googleBtnloginView(),
+              SizedBox(height: _size.height * .02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                    onPressed: () {
+                      c.goToRegister();
+                    },
+                    child: Text(
+                      "Crear cuenta",
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    )),
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider()),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Continuar sin sesión",
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    )),
+              )
+            ],
+          );
+        },
       );
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
+import 'package:todo/src/presentation/widgets/btn_widget.dart';
 import 'package:todo/src/presentation/widgets/input_widget.dart';
 
-import '../../../widgets/btn_widget.dart';
 
 Widget formLoginView({required Size size}) =>
     BlocBuilder<LoginCubit, LoginState>(

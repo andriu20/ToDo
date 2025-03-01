@@ -23,3 +23,4 @@ samples, guidance on mobile development, and a full API reference.
  <a href="https://www.flaticon.com/free-icons/visibility" title="visibility icons">Visibility icons created by Andrean Prabowo - Flaticon</a>
  <a href="https://www.flaticon.com/free-icons/visibility" title="visibility icons">Visibility icons created by uicon - Flaticon</a>
  <a href="https://www.flaticon.com/free-icons/google" title="google icons">Google icons created by Ruslan Babkin - Flaticon</a>
+ <a href="https://www.flaticon.com/free-icons/person" title="person icons">Person icons created by Freepik - Flaticon</a>

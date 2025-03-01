@@ -36,5 +36,8 @@ class LoginCubit extends Cubit<LoginState> {
 
   ///Peticiones------------------------
   ///Navegacion------------------------
+
+  void goToRegister() => Navigator.pushNamed(state.context, "register");
+
   ///Otros------------------------
 }
