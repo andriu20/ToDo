@@ -1,7 +1,7 @@
-import 'package:todo/src/domain/entities/registro_entity.dart';
+import 'package:todo/src/domain/entities/user_entity.dart';
 
-class RegistroModel extends RegistrEontity {
-  const RegistroModel({
+class UserModel extends UserEntity {
+  const UserModel({
     required super.uid,
     required super.email,
     super.displayName,
@@ -9,8 +9,8 @@ class RegistroModel extends RegistrEontity {
     required super.creationTime,
   });
 
-  factory RegistroModel.fromMap(Map<String, dynamic> map) {
-    return RegistroModel(
+  factory UserModel.fromMap(Map<String, dynamic> map) {
+    return UserModel(
       uid: map['uid'] ?? '',
       email: map['email'] ?? '',
       displayName: map['displayName'],

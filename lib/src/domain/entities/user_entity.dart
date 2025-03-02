@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 
-class RegistrEontity extends Equatable {
+class UserEntity extends Equatable {
   final String uid;
   final String email;
   final String? displayName;
   final bool isEmailVerified;
   final DateTime creationTime;
 
-  const RegistrEontity({
+  const UserEntity({
     required this.uid,
     required this.email,
     this.displayName,
@@ -24,18 +24,18 @@ class RegistrEontity extends Equatable {
         creationTime,
       ];
 
-  RegistrEontity copyWith({
+  UserEntity copyWith({
     String? uid,
     String? email,
     String? displayName,
     bool? isEmailVerified,
     DateTime? creationTime,
   }) =>
-      RegistrEontity(
+      UserEntity(
           uid: uid ?? this.uid,
           email: email ?? this.email,
           isEmailVerified: isEmailVerified ?? this.isEmailVerified,
           creationTime: creationTime ?? this.creationTime,
-          displayName: displayName ?? this.displayName,
+          displayName: displayName ?? this.displayName
           );
 }

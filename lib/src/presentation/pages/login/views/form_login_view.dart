@@ -4,7 +4,6 @@ import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
 import 'package:todo/src/presentation/widgets/btn_widget.dart';
 import 'package:todo/src/presentation/widgets/input_widget.dart';
 
-
 Widget formLoginView({required Size size}) =>
     BlocBuilder<LoginCubit, LoginState>(
       builder: (context, state) {
@@ -20,25 +19,29 @@ Widget formLoginView({required Size size}) =>
                     typeLine: TypeLine.line,
                     hintText: "Ej: example@gmail.com",
                     preffixIcon: Image.asset("assets/png/email.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 InputWidget.input(
                     controller: c.passwordController,
                     typeLine: TypeLine.line,
                     hintText: "******",
-                    obscureText: state.showPassword,
+                    obscureText: !state.showPassword,
                     suffixIcon: IconButton(
                         onPressed: () {
                           c.getEventShowPassword();
                         },
-                        icon: Image.asset(!state.showPassword
+                        icon: Image.asset(state.showPassword
                             ? "assets/png/visible.png"
                             : "assets/png/visibility.png")),
                     preffixIcon: Image.asset("assets/png/lock.png"),
                     onChanged: (e) {}),
                 SizedBox(height: size.height * .03),
                 BtnWidget.btn(
-                    onPressed: () {},
+                    onPressed: () {
+                      c.login();
+                    },
                     text: "Ingresar",
                     enabled: state.btnEbnabled)
               ],

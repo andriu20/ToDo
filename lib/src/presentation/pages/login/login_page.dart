@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
 import 'package:todo/src/presentation/pages/login/views/form_login_view.dart';
 import 'package:todo/src/presentation/pages/login/views/google_btn_login_view.dart';
@@ -19,7 +20,7 @@ class LoginPage extends StatelessWidget {
     _size = MediaQuery.sizeOf(context);
     return SafeArea(
         child: BlocProvider(
-      create: (context) => LoginCubit(context: context),
+      create: (context) => LoginCubit(context: context, authRepo: sl()),
       child: Scaffold(body: _body()),
     ));
   }

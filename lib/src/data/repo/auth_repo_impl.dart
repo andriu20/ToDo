@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:todo/src/core/failure/failure.dart';
 import 'package:todo/src/data/datasource/auth_data_source.dart';
-import 'package:todo/src/domain/entities/registro_entity.dart';
+import 'package:todo/src/domain/entities/user_entity.dart';
 import 'package:todo/src/domain/repository/auth_repo.dart';
 
 class AuthRepoImpl implements AuthRepo {
@@ -10,7 +10,7 @@ class AuthRepoImpl implements AuthRepo {
   AuthRepoImpl({required this.dataSource});
 
   @override
-  Future<Either<Failure, RegistrEontity?>> registerWithEmail(
+  Future<Either<Failure, UserEntity?>> registerWithEmail(
       {required String email, required String password}) async {
     try {
       final result =
@@ -22,7 +22,7 @@ class AuthRepoImpl implements AuthRepo {
   }
 
   @override
-  Future<Either<Failure, dynamic>> loginWithEmail(
+  Future<Either<Failure, UserEntity?>> loginWithEmail(
       {required String email, required String password}) async {
     try {
       final result =
@@ -37,6 +37,16 @@ class AuthRepoImpl implements AuthRepo {
   Future<Either<Failure, dynamic>> loginWithGoogle() async {
     try {
       final result = await dataSource.loginWithGoogle();
+      return Right(result);
+    } catch (e) {
+      return Left(Failure("$e"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> checkSession() async {
+    try {
+      final result = await dataSource.checkSession();
       return Right(result);
     } catch (e) {
       return Left(Failure("$e"));
