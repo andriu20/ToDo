@@ -14,6 +14,8 @@ abstract class AuthDataSource {
   Future<dynamic> loginWithGoogle();
 
   Future<bool> checkSession();
+
+  Future<void> signOut();
 }
 
 class AuthDataSourceImpl implements AuthDataSource {
@@ -79,18 +81,29 @@ class AuthDataSourceImpl implements AuthDataSource {
   Future<bool> checkSession() async {
     bool e = false;
 
-    // Usamos await for para esperar la emisión de cambios del stream
     await for (var user in auth.authStateChanges()) {
       if (user != null) {
-        // El usuario está autenticado
         e = true;
-        break; // Si ya sabemos que está autenticado, podemos salir del loop
+        break;
       } else {
-        // El usuario no está autenticado
         e = false;
+        break;
       }
     }
-
     return e;
+  }
+
+  @override
+  Future<void> signOut() async {
+    try {
+      await auth.signOut();
+      if (kDebugMode) {
+        log('Sesión cerrada exitosamente');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        log('Sesión cerrada exitosamente');
+      }
+    }
   }
 }

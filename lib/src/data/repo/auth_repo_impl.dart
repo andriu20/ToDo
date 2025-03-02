@@ -52,4 +52,14 @@ class AuthRepoImpl implements AuthRepo {
       return Left(Failure("$e"));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> signOut() async {
+    try {
+      await dataSource.signOut();
+      return const Right(null);
+    } catch (e) {
+      return Left(Failure(e.toString()));
+    }
+  }
 }

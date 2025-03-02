@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -57,10 +56,16 @@ class RegisterCubit extends Cubit<RegisterState> {
 
   ///Peticiones------------------------
   void crearCuenta() async {
+    emit(state.copyWith(loading: true));
     final registro = await authRepo.registerWithEmail(
         email: emailCtrl.text, password: passwordController.text);
-    registro.fold((l) {}, (r) {
-      _crearUsuario(r!.uid);
+    emit(state.copyWith(loading: false));
+    registro.fold((l) {}, (r) async {
+      if (r!.uid.isNotEmpty) {
+        _crearUsuario(r.uid);
+        await authRepo.signOut();
+        _goToLogin();
+      }
     });
   }
 
@@ -77,6 +82,7 @@ class RegisterCubit extends Cubit<RegisterState> {
   }
 
   ///Navegacion------------------------
+  void _goToLogin() => Navigator.pushReplacementNamed(state.context, 'login');
 
   ///Otros------------------------
 }

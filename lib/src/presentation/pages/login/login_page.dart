@@ -7,6 +7,7 @@ import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
 import 'package:todo/src/presentation/pages/login/views/form_login_view.dart';
 import 'package:todo/src/presentation/pages/login/views/google_btn_login_view.dart';
 import 'package:todo/src/presentation/pages/login/views/logo_login_view.dart';
+import 'package:todo/src/presentation/widgets/loading_widget.dart';
 
 import 'views/txt_login_view.dart';
 
@@ -21,7 +22,19 @@ class LoginPage extends StatelessWidget {
     return SafeArea(
         child: BlocProvider(
       create: (context) => LoginCubit(context: context, authRepo: sl()),
-      child: Scaffold(body: _body()),
+      child: Scaffold(body: BlocBuilder<LoginCubit, LoginState>(
+        builder: (context, state) {
+          return Stack(
+            children: [
+              _body(),
+              Visibility(
+                visible: state.loading,
+                child: LoadingWidget(),
+              )
+            ],
+          );
+        },
+      )),
     ));
   }
 

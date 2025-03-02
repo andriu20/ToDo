@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -45,8 +43,10 @@ class LoginCubit extends Cubit<LoginState> {
   ///Peticiones------------------------
 
   void login() async {
+    emit(state.copyWith(loading: true));
     final response = await authRepo.loginWithEmail(
         email: emailCtrl.text, password: passwordController.text);
+    emit(state.copyWith(loading: false));
 
     response.fold((l) {}, (r) {
       if (r!.email.isNotEmpty) {
@@ -56,9 +56,15 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void _checkSession() async {
+    emit(state.copyWith(loading: true));
     final session = await authRepo.checkSession();
+
+    emit(state.copyWith(loading: false));
+
     session.fold((l) {}, (r) {
-      goToHome();
+      if (r) {
+        goToHome();
+      }
     });
   }
 

@@ -9,4 +9,5 @@ abstract class AuthRepo {
       {required String email, required String password});
   Future<Either<Failure, dynamic>> loginWithGoogle();
   Future<Either<Failure, bool>> checkSession();
+  Future<Either<Failure, void>> signOut();
 }
