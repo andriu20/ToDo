@@ -78,7 +78,7 @@ Widget formRegisterView({required Size size}) =>
                 SizedBox(height: size.height * .03),
                 BtnWidget.btn(
                     onPressed: () {
-                      c.crearUsuario();
+                      c.crearCuenta();
                     },
                     text: "Crear cuenta",
                     enabled: state.btnEbnabled)

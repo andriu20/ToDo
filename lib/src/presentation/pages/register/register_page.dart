@@ -18,6 +18,7 @@ class RegisterPage extends StatelessWidget {
       create: (context) => RegisterCubit(
         context: context,
         authRepo: sl(),
+        userRepo: sl()
       ),
       child: SafeArea(
         child: Scaffold(

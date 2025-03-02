@@ -9,7 +9,7 @@ class UserRepoImpl implements UserRepo {
 
   UserRepoImpl({required this.userDataSource});
   @override
-  Future<Either<Failure, dynamic>> crearUsuario({required UserDto dto}) async {
+  Future<Either<Failure, bool>> crearUsuario({required UserDto dto}) async {
     try {
       final result = await userDataSource.crearUsuario(dto: dto);
       return Right(result);
