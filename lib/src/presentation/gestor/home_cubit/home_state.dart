@@ -8,24 +8,34 @@ class HomeState extends Equatable {
   late String statusSelected;
   late DateTime? date;
   late bool btnFormTask;
-  HomeState(
-      {required this.context,
-      this.taskDto,
-      this.statusSelected = "T",
-      this.date,
-      this.btnFormTask=false,
-      });
+  late bool loading;
+  HomeState({
+    required this.context,
+    this.taskDto,
+    this.statusSelected = "T",
+    this.date,
+    this.btnFormTask = false,
+    this.loading = false,
+  });
 
   @override
-  List<Object?> get props => [context, taskDto, statusSelected, date,btnFormTask];
+  List<Object?> get props => [
+        context,
+        taskDto,
+        statusSelected,
+        date,
+        btnFormTask,
+        loading,
+      ];
   HomeState copyWith(
           {BuildContext? context,
           List<TaskDto>? taskDto,
           String? statusSelected,
           DateTime? date,
-          bool? btnFormTask
-          }) =>
+          bool? loading,
+          bool? btnFormTask}) =>
       HomeState(
+          loading: loading ?? this.loading,
           context: context ?? this.context,
           btnFormTask: btnFormTask ?? this.btnFormTask,
           taskDto: taskDto ?? this.taskDto,

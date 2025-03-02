@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/home_cubit/home_cubit.dart';
 import 'package:todo/src/presentation/pages/home/views/card_todo_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/chip_home_view.dart';
@@ -15,7 +16,7 @@ class HomePage extends StatelessWidget {
     _size = MediaQuery.sizeOf(context);
     return SafeArea(
       child: BlocProvider(
-        create: (context) => HomeCubit(context: context),
+        create: (context) => HomeCubit(context: context, taskRepo: sl()),
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             final c = context.read<HomeCubit>();
@@ -68,6 +69,7 @@ class HomePage extends StatelessWidget {
           value: cubit,
           child: BlocBuilder<HomeCubit, HomeState>(
             builder: (context, state) {
+              final c = context.read<HomeCubit>();
               return AlertDialog(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
@@ -83,7 +85,11 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(color: Colors.red),
                       )),
                   TextButton(
-                      onPressed: state.btnFormTask ? () {} : null,
+                      onPressed: state.btnFormTask
+                          ? () {
+                              c.taskCreate();
+                            }
+                          : null,
                       child: Text(
                         "Crear",
                         style: TextStyle(

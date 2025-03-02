@@ -3,13 +3,18 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:todo/src/core/utils.dart';
 import 'package:todo/src/domain/dto/task_dto.dart';
+import 'package:todo/src/domain/repository/task_dto.dart';
+import 'package:uuid/uuid.dart';
 
 part 'home_state.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   ///Repositorios---------------------------
+  ///
+  final TaskRepo taskRepo;
+
   ///Constructor---------------------------
-  HomeCubit({required BuildContext context})
+  HomeCubit({required BuildContext context, required this.taskRepo})
       : super(HomeState(context: context)) {
     emit(state.copyWith(taskDto: _taskDto));
   }
@@ -19,78 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
   final titleCtrl = TextEditingController();
   final descriptionCtrl = TextEditingController();
 
-  final List<TaskDto> _taskDto = [
-    TaskDto(
-        id: 1,
-        tittle: "Titulo 1",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: true,
-        date: DateTime.now()),
-    TaskDto(
-        id: 2,
-        tittle: "Titulo 2",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 3,
-        tittle: "Titulo 3",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 4,
-        tittle: "Titulo 4",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 5,
-        tittle: "Titulo 5",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 6,
-        tittle: "Titulo 6",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 7,
-        tittle: "Titulo 7",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 8,
-        tittle: "Titulo 8",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 9,
-        tittle: "Titulo 9",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now()),
-    TaskDto(
-        id: 10,
-        tittle: "Titulo 10",
-        descripcion:
-            "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
-        completed: false,
-        date: DateTime.now())
-  ];
+  final List<TaskDto> _taskDto = [];
 
   ///Eventos---------------------------
   void getEventFilterTask(String v) {
@@ -138,6 +72,25 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   ///Peticiones---------------------------
+
+  void taskCreate() async {
+    Navigator.pop(state.context);
+    emit(state.copyWith(loading: true));
+    final response = await taskRepo.create(
+        dto: TaskDto(
+      tittle: titleCtrl.text,
+      id: Uuid().v4(),
+      descripcion: descriptionCtrl.text,
+      completed: false,
+      date: state.date!,
+    ));
+    emit(state.copyWith(loading: false));
+
+    response.fold((l) {}, (r) {
+      if (r) {}
+    });
+  }
+
   ///Navegacion---------------------------
   ///Otros---------------------------
 }
