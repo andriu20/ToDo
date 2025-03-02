@@ -6,19 +6,20 @@ enum TypeLine {
 }
 
 class InputWidget {
-  static Widget input({
-    required TextEditingController controller,
-    required Function(String) onChanged,
-    TypeLine typeLine = TypeLine.border,
-    bool obscureText = false,
-    String? hintText,
-    Widget? preffixIcon,
-    Widget? suffixIcon,
-  }) =>
+  static Widget input(
+          {required TextEditingController controller,
+          required Function(String) onChanged,
+          TypeLine typeLine = TypeLine.border,
+          bool obscureText = false,
+          String? hintText,
+          Widget? preffixIcon,
+          Widget? suffixIcon,
+          int lines = 1}) =>
       TextFormField(
         controller: controller,
         onChanged: onChanged,
         obscureText: obscureText,
+        maxLines: lines,
         decoration: InputDecoration(
           hintText: hintText,
           prefixIcon: preffixIcon,

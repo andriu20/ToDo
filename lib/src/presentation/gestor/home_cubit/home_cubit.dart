@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/src/core/utils.dart';
 import 'package:todo/src/domain/dto/task_dto.dart';
 
 part 'home_state.dart';
@@ -14,6 +15,9 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   ///Variables---------------------------
+
+  final titleCtrl = TextEditingController();
+  final descriptionCtrl = TextEditingController();
 
   final List<TaskDto> _taskDto = [
     TaskDto(
@@ -90,7 +94,7 @@ class HomeCubit extends Cubit<HomeState> {
 
   ///Eventos---------------------------
   void getEventFilterTask(String v) {
-      emit(state.copyWith(taskDto: _taskDto, statusSelected: v));
+    emit(state.copyWith(taskDto: _taskDto, statusSelected: v));
     final list = state.taskDto ?? [];
     List<TaskDto> listTem = [];
 
@@ -110,10 +114,29 @@ class HomeCubit extends Cubit<HomeState> {
         }
       }
     }
-       emit(state.copyWith(taskDto:listTem));
+    emit(state.copyWith(taskDto: listTem));
+  }
+
+  void getEventDate() async {
+    final date = await Utils.selectDate(state.context);
+    if (date != null) {
+      emit(state.copyWith(date: date));
+      formTaskValid();
+    }
   }
 
   ///Validaciones---------------------------
+
+  void formTaskValid() {
+    bool e = false;
+    if (descriptionCtrl.text.isNotEmpty &&
+        titleCtrl.text.isNotEmpty &&
+        state.date != null) {
+      e = true;
+    }
+    emit(state.copyWith(btnFormTask: e));
+  }
+
   ///Peticiones---------------------------
   ///Navegacion---------------------------
   ///Otros---------------------------
