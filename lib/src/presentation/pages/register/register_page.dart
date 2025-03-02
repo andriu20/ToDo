@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/register_cubit/register_cubit.dart';
 import 'package:todo/src/presentation/pages/register/views/form_register_view.dart';
 import 'package:todo/src/presentation/pages/register/views/google_btn_register_view.dart';
@@ -14,7 +15,10 @@ class RegisterPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _size = MediaQuery.sizeOf(context);
     return BlocProvider(
-      create: (context) => RegisterCubit(context: context),
+      create: (context) => RegisterCubit(
+        context: context,
+        authRepo: sl(),
+      ),
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(

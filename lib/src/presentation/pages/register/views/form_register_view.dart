@@ -16,31 +16,37 @@ Widget formRegisterView({required Size size}) =>
               children: [
                 SizedBox(height: size.height * .06),
                 InputWidget.input(
-                    controller: c.emailCtrl,
+                    controller: c.nameCtrl,
                     typeLine: TypeLine.line,
                     hintText: "Nombres",
                     preffixIcon: Image.asset("assets/png/man.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 InputWidget.input(
-                    controller: c.emailCtrl,
+                    controller: c.lastNameCtrl,
                     typeLine: TypeLine.line,
                     hintText: "Apellidos",
                     preffixIcon: Image.asset("assets/png/man.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 InputWidget.input(
                     controller: c.emailCtrl,
                     typeLine: TypeLine.line,
                     hintText: "Ej: example@gmail.com",
                     preffixIcon: Image.asset("assets/png/email.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 InputWidget.input(
                     controller: c.passwordController,
                     typeLine: TypeLine.line,
                     hintText: "Contraseña",
-                    obscureText: state.showPassword,
+                    obscureText: !state.showPassword,
                     suffixIcon: IconButton(
                         onPressed: () {
                           c.getEventShowPassword();
@@ -49,13 +55,15 @@ Widget formRegisterView({required Size size}) =>
                             ? "assets/png/visible.png"
                             : "assets/png/visibility.png")),
                     preffixIcon: Image.asset("assets/png/lock.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 InputWidget.input(
-                    controller: c.passwordController,
+                    controller: c.confPassController,
                     typeLine: TypeLine.line,
                     hintText: "Confimar contraseña",
-                    obscureText: state.showPasswordConf,
+                    obscureText: !state.showPasswordConf,
                     suffixIcon: IconButton(
                         onPressed: () {
                           c.getEventShowPasswordConf();
@@ -64,10 +72,14 @@ Widget formRegisterView({required Size size}) =>
                             ? "assets/png/visible.png"
                             : "assets/png/visibility.png")),
                     preffixIcon: Image.asset("assets/png/lock.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 BtnWidget.btn(
-                    onPressed: () {},
+                    onPressed: () {
+                      c.crearUsuario();
+                    },
                     text: "Crear cuenta",
                     enabled: state.btnEbnabled)
               ],
