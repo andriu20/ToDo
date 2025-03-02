@@ -54,7 +54,9 @@ class LoginPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, "home");
+                    },
                     child: Text(
                       "Continuar sin sesión",
                       style: TextStyle(decoration: TextDecoration.underline),
