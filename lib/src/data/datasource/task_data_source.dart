@@ -14,8 +14,17 @@ enum TypeListEnum {
 
 abstract class TaskDataSource {
   Future<bool> create(TaskDto dto);
-  Future<List<TaskModel>> taskList(
-      {required String userId, TypeListEnum tl = TypeListEnum.all});
+
+  Future<List<TaskModel>> taskList({
+    required String userId,
+    TypeListEnum tl = TypeListEnum.all,
+  });
+
+  Future<bool> updateTaskCompletion({
+    required String userId,
+    required String taskId,
+    required bool completed,
+  });
 }
 
 class TaskDataSourceImpl implements TaskDataSource {
@@ -74,6 +83,29 @@ class TaskDataSourceImpl implements TaskDataSource {
         log("Error obteniendo tareas: $e");
       }
       return [];
+    }
+  }
+
+  @override
+  Future<bool> updateTaskCompletion({
+    required String userId,
+    required String taskId,
+    required bool completed,
+  }) async {
+    try {
+      await firestore
+          .collection('tasks')
+          .doc(userId)
+          .collection('tasks')
+          .doc(taskId)
+          .update({"completed": completed});
+
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        log("Error actualizando tarea: $e");
+      }
+      return false;
     }
   }
 }

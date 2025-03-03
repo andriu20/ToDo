@@ -27,7 +27,6 @@ class HomeCubit extends Cubit<HomeState> {
   final titleCtrl = TextEditingController();
   final descriptionCtrl = TextEditingController();
 
-
   ///Eventos---------------------------
   void getEventFilterTask(String v) {
     emit(state.copyWith(taskDto: [], statusSelected: v));
@@ -90,6 +89,19 @@ class HomeCubit extends Cubit<HomeState> {
         _taskList();
       }
     });
+  }
+
+  void updateTask(TaskEntity e) async {
+    emit(state.copyWith(loading: true));
+    final response = await taskRepo.updateTaskCompletion(
+      userId: Shared.getUserModel.uid,
+      taskId: e.id,
+      completed: true,
+    );
+    response.fold((l) {}, (r) {
+      _taskList();
+    });
+    emit(state.copyWith(loading: false));
   }
 
   ///Navegacion---------------------------

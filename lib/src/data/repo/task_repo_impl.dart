@@ -38,4 +38,24 @@ class TaskRepoImpl implements TaskRepo {
       return Left(Failure("$e"));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> updateTaskCompletion(
+      {required String userId,
+      required String taskId,
+      required bool completed}) async {
+    try {
+      final r = await dataSource.updateTaskCompletion(
+        userId: userId,
+        taskId: taskId,
+        completed: completed,
+      );
+      return Right(r);
+    } catch (e) {
+      if (kDebugMode) {
+        log("$e -");
+      }
+      return Left(Failure("$e"));
+    }
+  }
 }

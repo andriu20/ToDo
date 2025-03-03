@@ -7,5 +7,11 @@ import 'package:todo/src/domain/entities/task_entity.dart';
 abstract class TaskRepo {
   Future<Either<Failure, bool>> create({required TaskDto dto});
 
-  Future<Either<Failure, List<TaskEntity>>> taskList({required String userId, TypeListEnum tl = TypeListEnum.all});
+  Future<Either<Failure, List<TaskEntity>>> taskList(
+      {required String userId, TypeListEnum tl = TypeListEnum.all});
+
+  Future<Either<Failure, bool>> updateTaskCompletion(
+      {required String userId,
+      required String taskId,
+      required bool completed});
 }

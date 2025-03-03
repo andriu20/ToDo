@@ -7,6 +7,7 @@ import 'package:todo/src/presentation/gestor/home_cubit/home_cubit.dart';
 Widget cardTodoHomeView({required Size size, required TaskEntity dto}) =>
     BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
+        final c = context.read<HomeCubit>();
         return Container(
           width: size.width,
           margin: EdgeInsets.symmetric(
@@ -41,7 +42,7 @@ Widget cardTodoHomeView({required Size size, required TaskEntity dto}) =>
                       Expanded(child: SizedBox()),
                       GestureDetector(
                           onTap: () {
-                            _dialogButtonShet(context);
+                            _dialogButtonShet(context, c, dto);
                           },
                           child: Icon(Icons.more_vert_rounded))
                     ],
@@ -92,11 +93,36 @@ Widget cardTodoHomeView({required Size size, required TaskEntity dto}) =>
       },
     );
 
-void _dialogButtonShet(BuildContext context) => showModalBottomSheet(
-    context: context,
-    builder: (_) => Container(
-        margin: EdgeInsets.only(bottom: 30),
-        child: ListTile(
-          leading: Icon(Icons.check_box, color: Colors.green),
-          title: Text("Finalizar"),
-        )));
+void _dialogButtonShet(BuildContext context, HomeCubit c, TaskEntity t) =>
+    showModalBottomSheet(
+        context: context,
+        builder: (_) => BlocProvider.value(
+              value: c,
+              child: Container(
+                  margin: EdgeInsets.only(bottom: 30),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Visibility(
+                        visible: !t.completed,
+                        child: ListTile(
+                          onTap: () {
+                            Navigator.pop(context);
+                            c.updateTask(t);
+                          },
+                          leading: Icon(Icons.check_box, color: Colors.green),
+                          title: Text("Finalizar"),
+                        ),
+                      ),
+                      ListTile(
+                        onTap: () {
+                          Navigator.pop(context);
+                          c.updateTask(t);
+                        },
+                        leading: Icon(Icons.delete_forever_rounded,
+                            color: Colors.red),
+                        title: Text("Eliminar"),
+                      ),
+                    ],
+                  )),
+            ));
