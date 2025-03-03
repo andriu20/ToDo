@@ -7,6 +7,7 @@ import 'package:todo/src/presentation/gestor/home_cubit/home_cubit.dart';
 import 'package:todo/src/presentation/pages/home/views/card_todo_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/chip_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/form_new_task_view.dart';
+import 'package:todo/src/presentation/widgets/loading_widget.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -26,7 +27,14 @@ class HomePage extends StatelessWidget {
                 elevation: 8,
                 leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
               ),
-              body: _body(),
+              body: Stack(
+                children: [
+                  _body(),
+                  Visibility(
+                    visible: state.loading,
+                    child: LoadingWidget())
+                ],
+              ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   _addNewTask(context: context, cubit: c);

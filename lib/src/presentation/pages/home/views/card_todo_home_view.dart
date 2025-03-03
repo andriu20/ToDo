@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:todo/src/domain/dto/task_dto.dart';
+import 'package:todo/src/domain/entities/task_entity.dart';
 import 'package:todo/src/presentation/gestor/home_cubit/home_cubit.dart';
 
-Widget cardTodoHomeView({required Size size, required TaskDto dto}) =>
+Widget cardTodoHomeView({required Size size, required TaskEntity dto}) =>
     BlocBuilder<HomeCubit, HomeState>(
       builder: (context, state) {
         return Container(

@@ -4,7 +4,7 @@ part of 'home_cubit.dart';
 
 class HomeState extends Equatable {
   final BuildContext context;
-  final List<TaskDto>? taskDto;
+  final List<TaskEntity>? taskDto;
   late String statusSelected;
   late DateTime? date;
   late bool btnFormTask;
@@ -29,7 +29,7 @@ class HomeState extends Equatable {
       ];
   HomeState copyWith(
           {BuildContext? context,
-          List<TaskDto>? taskDto,
+          List<TaskEntity>? taskDto,
           String? statusSelected,
           DateTime? date,
           bool? loading,

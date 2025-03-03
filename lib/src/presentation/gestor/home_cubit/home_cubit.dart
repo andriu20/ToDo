@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/src/core/shared/shared.dart';
 import 'package:todo/src/core/utils.dart';
+import 'package:todo/src/data/datasource/task_data_source.dart';
 import 'package:todo/src/domain/dto/task_dto.dart';
+import 'package:todo/src/domain/entities/task_entity.dart';
 import 'package:todo/src/domain/repository/task_dto.dart';
 import 'package:uuid/uuid.dart';
 
@@ -16,7 +19,7 @@ class HomeCubit extends Cubit<HomeState> {
   ///Constructor---------------------------
   HomeCubit({required BuildContext context, required this.taskRepo})
       : super(HomeState(context: context)) {
-    emit(state.copyWith(taskDto: _taskDto));
+    _taskList();
   }
 
   ///Variables---------------------------
@@ -24,31 +27,17 @@ class HomeCubit extends Cubit<HomeState> {
   final titleCtrl = TextEditingController();
   final descriptionCtrl = TextEditingController();
 
-  final List<TaskDto> _taskDto = [];
 
   ///Eventos---------------------------
   void getEventFilterTask(String v) {
-    emit(state.copyWith(taskDto: _taskDto, statusSelected: v));
-    final list = state.taskDto ?? [];
-    List<TaskDto> listTem = [];
+    emit(state.copyWith(taskDto: [], statusSelected: v));
 
-    emit(state.copyWith(taskDto: []));
-    for (var i in list) {
-      if (v == "T") {
-        listTem.add(i);
-      }
-      if (v == "C") {
-        if (i.completed) {
-          listTem.add(i);
-        }
-      }
-      if (v == "P") {
-        if (!i.completed) {
-          listTem.add(i);
-        }
-      }
-    }
-    emit(state.copyWith(taskDto: listTem));
+    _taskList(
+        tl: v == "P"
+            ? TypeListEnum.pending
+            : v == "C"
+                ? TypeListEnum.completed
+                : TypeListEnum.all);
   }
 
   void getEventDate() async {
@@ -72,6 +61,16 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   ///Peticiones---------------------------
+  ///
+  void _taskList({TypeListEnum tl = TypeListEnum.all}) async {
+    emit(state.copyWith(loading: true));
+    final response =
+        await taskRepo.taskList(userId: Shared.getUserModel.uid, tl: tl);
+    emit(state.copyWith(loading: false));
+    response.fold((l) {}, (r) {
+      emit(state.copyWith(taskDto: r));
+    });
+  }
 
   void taskCreate() async {
     Navigator.pop(state.context);
@@ -87,7 +86,9 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(loading: false));
 
     response.fold((l) {}, (r) {
-      if (r) {}
+      if (r) {
+        _taskList();
+      }
     });
   }
 

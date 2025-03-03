@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:todo/src/core/failure/failure.dart';
 import 'package:todo/src/data/datasource/task_data_source.dart';
 import 'package:todo/src/domain/dto/task_dto.dart';
+import 'package:todo/src/domain/entities/task_entity.dart';
 import 'package:todo/src/domain/repository/task_dto.dart';
 
 class TaskRepoImpl implements TaskRepo {
@@ -14,7 +18,23 @@ class TaskRepoImpl implements TaskRepo {
       final r = await dataSource.create(dto);
       return Right(r);
     } catch (e) {
-      print(e);
+      if (kDebugMode) {
+        log("$e");
+      }
+      return Left(Failure("$e"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<TaskEntity>>> taskList(
+      {required String userId, TypeListEnum tl = TypeListEnum.all}) async {
+    try {
+      final r = await dataSource.taskList(userId: userId, tl: tl);
+      return Right(r);
+    } catch (e) {
+      if (kDebugMode) {
+        log("$e -");
+      }
       return Left(Failure("$e"));
     }
   }
