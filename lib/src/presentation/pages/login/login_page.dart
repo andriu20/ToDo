@@ -50,17 +50,6 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: _size.height * .02),
               Text("Tambien puedes ingresar con:"),
               SizedBox(height: _size.height * .02),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "home");
-                    },
-                    child: Text(
-                      "Continuar sin sesión",
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    )),
-              ),
               Container(
                   margin: EdgeInsets.symmetric(horizontal: 20),
                   child: Divider()),

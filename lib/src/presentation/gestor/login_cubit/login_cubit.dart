@@ -55,7 +55,6 @@ class LoginCubit extends Cubit<LoginState> {
         Shared.setUserModel = UserModel(
           uid: r.uid,
           email: r.email,
-          isEmailVerified: r.isEmailVerified,
           creationTime: r.creationTime,
         );
         goToHome();

@@ -5,7 +5,6 @@ class UserModel extends UserEntity {
     required super.uid,
     required super.email,
     super.displayName,
-    required super.isEmailVerified,
     required super.creationTime,
   });
 
@@ -14,7 +13,6 @@ class UserModel extends UserEntity {
       uid: map['uid'] ?? '',
       email: map['email'] ?? '',
       displayName: map['displayName'],
-      isEmailVerified: map['isEmailVerified'] ?? false,
       creationTime: map['creationTime'] ?? DateTime.now(),
     );
   }

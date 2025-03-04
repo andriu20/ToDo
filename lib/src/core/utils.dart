@@ -1,3 +1,4 @@
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 
 class Utils {
@@ -29,7 +30,7 @@ class Utils {
     );
   }
 
-static  void showSnackbar(BuildContext context, String message,
+  static void showSnackbar(BuildContext context, String message,
       {bool isError = false}) {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
@@ -42,5 +43,11 @@ static  void showSnackbar(BuildContext context, String message,
         behavior: SnackBarBehavior.floating,
       ),
     );
+  }
+
+  static Future<String> idDevice() async {
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+    return androidInfo.id;
   }
 }
