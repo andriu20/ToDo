@@ -25,6 +25,10 @@ abstract class TaskDataSource {
     required String taskId,
     required bool completed,
   });
+  Future<bool> deleteTask({
+    required String userId,
+    required String taskId,
+  });
 }
 
 class TaskDataSourceImpl implements TaskDataSource {
@@ -104,6 +108,26 @@ class TaskDataSourceImpl implements TaskDataSource {
     } catch (e) {
       if (kDebugMode) {
         log("Error actualizando tarea: $e");
+      }
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> deleteTask(
+      {required String userId, required String taskId}) async {
+    try {
+      await firestore
+          .collection('tasks')
+          .doc(userId)
+          .collection('tasks')
+          .doc(taskId)
+          .delete();
+
+      return true;
+    } catch (e) {
+      if (kDebugMode) {
+        log("Error eliminando tarea: $e");
       }
       return false;
     }

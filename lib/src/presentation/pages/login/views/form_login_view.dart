@@ -36,7 +36,9 @@ Widget formLoginView({required Size size}) =>
                             ? "assets/png/visible.png"
                             : "assets/png/visibility.png")),
                     preffixIcon: Image.asset("assets/png/lock.png"),
-                    onChanged: (e) {}),
+                    onChanged: (e) {
+                      c.formValid();
+                    }),
                 SizedBox(height: size.height * .03),
                 BtnWidget.btn(
                     onPressed: () {

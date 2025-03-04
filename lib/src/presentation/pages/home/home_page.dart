@@ -2,12 +2,16 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/home_cubit/home_cubit.dart';
+import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
 import 'package:todo/src/presentation/pages/home/views/card_todo_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/chip_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/form_new_task_view.dart';
 import 'package:todo/src/presentation/widgets/loading_widget.dart';
+
+import '../../widgets/speed_dial_widget.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -17,7 +21,7 @@ class HomePage extends StatelessWidget {
     _size = MediaQuery.sizeOf(context);
     return SafeArea(
       child: BlocProvider(
-        create: (context) => HomeCubit(context: context, taskRepo: sl()),
+        create: (context) => HomeCubit(context: context, taskRepo: sl(), authRepo: sl()),
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             final c = context.read<HomeCubit>();
@@ -25,22 +29,22 @@ class HomePage extends StatelessWidget {
               appBar: AppBar(
                 backgroundColor: Color.fromRGBO(254, 239, 205, 1),
                 elevation: 8,
-                leading: IconButton(onPressed: () {}, icon: Icon(Icons.menu)),
+                automaticallyImplyLeading: false,
+                title: Text(
+                  "Home",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
               body: Stack(
                 children: [
                   _body(),
-                  Visibility(
-                    visible: state.loading,
-                    child: LoadingWidget())
+                  Visibility(visible: state.loading, child: LoadingWidget())
                 ],
               ),
-              floatingActionButton: FloatingActionButton(
-                onPressed: () {
-                  _addNewTask(context: context, cubit: c);
-                },
-                child: Icon(Icons.add),
-              ),
+              
+              floatingActionButton:_option(context,c),
             );
           },
         ),
@@ -110,4 +114,26 @@ class HomePage extends StatelessWidget {
           ),
         ),
       );
+
+  Widget _option(BuildContext context, HomeCubit c) => SpeedDial(children: [
+        speedDialWidget(
+          Icons.person_add,
+          'Crear tarea',
+          () {
+             _addNewTask(context: context, cubit: c);
+          },
+        ),
+        speedDialWidget(
+          Icons.history_edu_outlined,
+          'Información de cuenta',
+          () {},
+        ),
+        speedDialWidget(
+          Icons.history_edu_outlined,
+          'Cerrar sesión',
+          () {
+            c.singOut();
+          },
+        ),
+      ], child: const Icon(Icons.add));
 }

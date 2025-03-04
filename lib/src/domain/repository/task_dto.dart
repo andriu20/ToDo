@@ -14,4 +14,9 @@ abstract class TaskRepo {
       {required String userId,
       required String taskId,
       required bool completed});
+
+  Future<Either<Failure, bool>> deleteTask(
+      {required String userId,
+      required String taskId,
+     });
 }

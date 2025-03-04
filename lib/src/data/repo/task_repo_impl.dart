@@ -58,4 +58,21 @@ class TaskRepoImpl implements TaskRepo {
       return Left(Failure("$e"));
     }
   }
+
+  @override
+  Future<Either<Failure, bool>> deleteTask(
+      {required String userId, required String taskId}) async {
+    try {
+      final r = await dataSource.deleteTask(
+        userId: userId,
+        taskId: taskId,
+      );
+      return Right(r);
+    } catch (e) {
+      if (kDebugMode) {
+        log("$e -");
+      }
+      return Left(Failure("$e"));
+    }
+  }
 }

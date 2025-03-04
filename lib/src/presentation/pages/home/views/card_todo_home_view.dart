@@ -117,7 +117,7 @@ void _dialogButtonShet(BuildContext context, HomeCubit c, TaskEntity t) =>
                       ListTile(
                         onTap: () {
                           Navigator.pop(context);
-                          c.updateTask(t);
+                          c.deletTask(t);
                         },
                         leading: Icon(Icons.delete_forever_rounded,
                             color: Colors.red),

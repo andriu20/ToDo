@@ -6,6 +6,7 @@ import 'package:todo/src/core/utils.dart';
 import 'package:todo/src/data/datasource/task_data_source.dart';
 import 'package:todo/src/domain/dto/task_dto.dart';
 import 'package:todo/src/domain/entities/task_entity.dart';
+import 'package:todo/src/domain/repository/auth_repo.dart';
 import 'package:todo/src/domain/repository/task_dto.dart';
 import 'package:uuid/uuid.dart';
 
@@ -15,9 +16,10 @@ class HomeCubit extends Cubit<HomeState> {
   ///Repositorios---------------------------
   ///
   final TaskRepo taskRepo;
+  final AuthRepo authRepo;
 
   ///Constructor---------------------------
-  HomeCubit({required BuildContext context, required this.taskRepo})
+  HomeCubit({required BuildContext context, required this.taskRepo, required this.authRepo})
       : super(HomeState(context: context)) {
     _taskList();
   }
@@ -67,6 +69,14 @@ class HomeCubit extends Cubit<HomeState> {
         await taskRepo.taskList(userId: Shared.getUserModel.uid, tl: tl);
     emit(state.copyWith(loading: false));
     response.fold((l) {}, (r) {
+      Utils.showSnackbar(
+        state.context,
+        r.isEmpty
+            ? "No hay tareas por listar."
+            : "Consulta realizada con éxito.",
+        isError: r.isEmpty,
+      );
+
       emit(state.copyWith(taskDto: r));
     });
   }
@@ -85,6 +95,11 @@ class HomeCubit extends Cubit<HomeState> {
     emit(state.copyWith(loading: false));
 
     response.fold((l) {}, (r) {
+      Utils.showSnackbar(
+        state.context,
+        r ? "Tarea creada éxito." : "No fue posible crear la tarea.",
+        isError: !r,
+      );
       if (r) {
         _taskList();
       }
@@ -99,11 +114,39 @@ class HomeCubit extends Cubit<HomeState> {
       completed: true,
     );
     response.fold((l) {}, (r) {
+      Utils.showSnackbar(
+        state.context,
+        r ? "Tarea actualizada éxito." : "No fue posible actualizar la tarea.",
+        isError: !r,
+      );
       _taskList();
     });
     emit(state.copyWith(loading: false));
   }
 
+  void deletTask(TaskEntity e) async {
+    emit(state.copyWith(loading: true));
+    final response = await taskRepo.deleteTask(
+      userId: Shared.getUserModel.uid,
+      taskId: e.id,
+    );
+    response.fold((l) {}, (r) {
+      Utils.showSnackbar(
+        state.context,
+        r ? "Tarea eliminada éxito." : "No fue posible eliminar la tarea.",
+        isError: !r,
+      );
+      _taskList();
+    });
+    emit(state.copyWith(loading: false));
+  }
+
+  void singOut() async {
+    await authRepo.signOut();
+    goLogin();
+  }
+
   ///Navegacion---------------------------
+  void goLogin() => Navigator.pushNamed(state.context, "login");
   ///Otros---------------------------
 }

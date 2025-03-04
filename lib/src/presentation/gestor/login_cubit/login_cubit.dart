@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/src/core/shared/shared.dart';
 import 'package:todo/src/core/utils.dart';
+import 'package:todo/src/data/model/user_model.dart';
 import 'package:todo/src/domain/repository/auth_repo.dart';
 
 part 'login_state.dart';
@@ -50,6 +52,12 @@ class LoginCubit extends Cubit<LoginState> {
 
     response.fold((l) {}, (r) {
       if (r!.email.isNotEmpty) {
+        Shared.setUserModel = UserModel(
+          uid: r.uid,
+          email: r.email,
+          isEmailVerified: r.isEmailVerified,
+          creationTime: r.creationTime,
+        );
         goToHome();
       }
     });
