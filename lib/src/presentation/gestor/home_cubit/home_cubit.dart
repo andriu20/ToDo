@@ -19,7 +19,10 @@ class HomeCubit extends Cubit<HomeState> {
   final AuthRepo authRepo;
 
   ///Constructor---------------------------
-  HomeCubit({required BuildContext context, required this.taskRepo, required this.authRepo})
+  HomeCubit(
+      {required BuildContext context,
+      required this.taskRepo,
+      required this.authRepo})
       : super(HomeState(context: context)) {
     _taskList();
   }
@@ -47,6 +50,10 @@ class HomeCubit extends Cubit<HomeState> {
       emit(state.copyWith(date: date));
       formTaskValid();
     }
+  }
+
+  void getEventTaskSele(String id) {
+    emit(state.copyWith(taskId: id));
   }
 
   ///Validaciones---------------------------
@@ -148,5 +155,6 @@ class HomeCubit extends Cubit<HomeState> {
 
   ///Navegacion---------------------------
   void goLogin() => Navigator.pushNamed(state.context, "login");
+
   ///Otros---------------------------
 }

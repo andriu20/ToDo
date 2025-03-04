@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/home_cubit/home_cubit.dart';
-import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
 import 'package:todo/src/presentation/pages/home/views/card_todo_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/chip_home_view.dart';
 import 'package:todo/src/presentation/pages/home/views/form_new_task_view.dart';
@@ -21,7 +20,8 @@ class HomePage extends StatelessWidget {
     _size = MediaQuery.sizeOf(context);
     return SafeArea(
       child: BlocProvider(
-        create: (context) => HomeCubit(context: context, taskRepo: sl(), authRepo: sl()),
+        create: (context) =>
+            HomeCubit(context: context, taskRepo: sl(), authRepo: sl()),
         child: BlocBuilder<HomeCubit, HomeState>(
           builder: (context, state) {
             final c = context.read<HomeCubit>();
@@ -43,8 +43,7 @@ class HomePage extends StatelessWidget {
                   Visibility(visible: state.loading, child: LoadingWidget())
                 ],
               ),
-              
-              floatingActionButton:_option(context,c),
+              floatingActionButton: _option(context, c),
             );
           },
         ),
@@ -120,7 +119,7 @@ class HomePage extends StatelessWidget {
           Icons.person_add,
           'Crear tarea',
           () {
-             _addNewTask(context: context, cubit: c);
+            _addNewTask(context: context, cubit: c);
           },
         ),
         speedDialWidget(

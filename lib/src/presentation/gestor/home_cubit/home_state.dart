@@ -9,6 +9,7 @@ class HomeState extends Equatable {
   late DateTime? date;
   late bool btnFormTask;
   late bool loading;
+  late String taskId;
   HomeState({
     required this.context,
     this.taskDto,
@@ -16,6 +17,7 @@ class HomeState extends Equatable {
     this.date,
     this.btnFormTask = false,
     this.loading = false,
+    this.taskId="",
   });
 
   @override
@@ -26,6 +28,7 @@ class HomeState extends Equatable {
         date,
         btnFormTask,
         loading,
+        taskId,
       ];
   HomeState copyWith(
           {BuildContext? context,
@@ -33,8 +36,10 @@ class HomeState extends Equatable {
           String? statusSelected,
           DateTime? date,
           bool? loading,
-          bool? btnFormTask}) =>
+          bool? btnFormTask,
+          String? taskId}) =>
       HomeState(
+          taskId: taskId ?? this.taskId,
           loading: loading ?? this.loading,
           context: context ?? this.context,
           btnFormTask: btnFormTask ?? this.btnFormTask,

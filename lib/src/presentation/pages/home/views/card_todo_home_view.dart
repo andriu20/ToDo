@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -66,7 +67,14 @@ Widget cardTodoHomeView({required Size size, required TaskEntity dto}) =>
                               text: "${dto.descripcion}    ",
                             ),
                             TextSpan(
-                                text: "(Traducir)",
+                                recognizer: TapGestureRecognizer()
+                                  ..onTap = () {
+                                    c.getEventTaskSele(
+                                        state.taskId == dto.id ? "" : dto.id);
+                                  },
+                                text: state.taskId == dto.id
+                                    ? "(Ocultar)"
+                                    : "(Traducir)",
                                 style: TextStyle(
                                     fontWeight: FontWeight.normal,
                                     fontStyle: FontStyle.italic,
@@ -75,11 +83,11 @@ Widget cardTodoHomeView({required Size size, required TaskEntity dto}) =>
                           ])),
                   SizedBox(height: 10),
                   Visibility(
-                    visible: false,
+                    visible: state.taskId == dto.id,
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 20),
                       child: Text(
-                        "Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion Descripcion",
+                        dto.translatedText,
                         textAlign: TextAlign.justify,
                         style: TextStyle(color: Colors.grey, fontSize: 13),
                       ),
