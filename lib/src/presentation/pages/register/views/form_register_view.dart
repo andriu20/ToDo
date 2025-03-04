@@ -51,7 +51,7 @@ Widget formRegisterView({required Size size}) =>
                         onPressed: () {
                           c.getEventShowPassword();
                         },
-                        icon: Image.asset(!state.showPassword
+                        icon: Image.asset(state.showPassword
                             ? "assets/png/visible.png"
                             : "assets/png/visibility.png")),
                     preffixIcon: Image.asset("assets/png/lock.png"),
@@ -68,14 +68,14 @@ Widget formRegisterView({required Size size}) =>
                         onPressed: () {
                           c.getEventShowPasswordConf();
                         },
-                        icon: Image.asset(!state.showPasswordConf
+                        icon: Image.asset(state.showPasswordConf
                             ? "assets/png/visible.png"
                             : "assets/png/visibility.png")),
                     preffixIcon: Image.asset("assets/png/lock.png"),
                     onChanged: (e) {
                       c.formValid();
                     }),
-                SizedBox(height: size.height * .03),
+                SizedBox(height: size.height * .09),
                 BtnWidget.btn(
                     onPressed: () {
                       c.crearCuenta();

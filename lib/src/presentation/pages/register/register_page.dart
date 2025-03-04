@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/register_cubit/register_cubit.dart';
 import 'package:todo/src/presentation/pages/register/views/form_register_view.dart';
-import 'package:todo/src/presentation/pages/register/views/google_btn_register_view.dart';
 import 'package:todo/src/presentation/widgets/loading_widget.dart';
 
 class RegisterPage extends StatelessWidget {
@@ -42,8 +41,7 @@ class RegisterPage extends StatelessWidget {
   Widget _body() => Column(
         children: [
           formRegisterView(size: _size),
-          SizedBox(height: 30),
-          googleBtnRegisterView(),
+         
         ],
       );
 }

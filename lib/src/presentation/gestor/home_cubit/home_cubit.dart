@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:todo/src/core/shared/shared.dart';
 import 'package:todo/src/core/utils.dart';
 import 'package:todo/src/data/datasource/task_data_source.dart';
+import 'package:todo/src/data/model/user_model.dart';
 import 'package:todo/src/domain/dto/task_dto.dart';
 import 'package:todo/src/domain/entities/task_entity.dart';
 import 'package:todo/src/domain/repository/auth_repo.dart';
@@ -150,6 +151,12 @@ class HomeCubit extends Cubit<HomeState> {
 
   void singOut() async {
     await authRepo.signOut();
+    Shared.setUserModel = UserModel(
+      uid: "",
+      email: "",
+      isEmailVerified: false,
+      creationTime: DateTime.now(),
+    );
     goLogin();
   }
 

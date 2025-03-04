@@ -5,7 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo/get_it.dart';
 import 'package:todo/src/presentation/gestor/login_cubit/login_cubit.dart';
 import 'package:todo/src/presentation/pages/login/views/form_login_view.dart';
-import 'package:todo/src/presentation/pages/login/views/google_btn_login_view.dart';
 import 'package:todo/src/presentation/pages/login/views/logo_login_view.dart';
 import 'package:todo/src/presentation/widgets/loading_widget.dart';
 
@@ -49,8 +48,22 @@ class LoginPage extends StatelessWidget {
               txtLoginView(size: _size),
               formLoginView(size: _size),
               SizedBox(height: _size.height * .02),
-              googleBtnloginView(),
+              Text("Tambien puedes ingresar con:"),
               SizedBox(height: _size.height * .02),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, "home");
+                    },
+                    child: Text(
+                      "Continuar sin sesión",
+                      style: TextStyle(decoration: TextDecoration.underline),
+                    )),
+              ),
+              Container(
+                  margin: EdgeInsets.symmetric(horizontal: 20),
+                  child: Divider()),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextButton(
@@ -62,20 +75,6 @@ class LoginPage extends StatelessWidget {
                       style: TextStyle(decoration: TextDecoration.underline),
                     )),
               ),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider()),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(context, "home");
-                    },
-                    child: Text(
-                      "Continuar sin sesión",
-                      style: TextStyle(decoration: TextDecoration.underline),
-                    )),
-              )
             ],
           );
         },
