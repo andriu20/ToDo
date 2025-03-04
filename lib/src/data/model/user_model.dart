@@ -5,7 +5,6 @@ class UserModel extends UserEntity {
     required super.uid,
     required super.email,
     super.displayName,
-    required super.creationTime,
   });
 
   factory UserModel.fromMap(Map<String, dynamic> map) {
@@ -13,7 +12,6 @@ class UserModel extends UserEntity {
       uid: map['uid'] ?? '',
       email: map['email'] ?? '',
       displayName: map['displayName'],
-      creationTime: map['creationTime'] ?? DateTime.now(),
     );
   }
 }

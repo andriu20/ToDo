@@ -48,11 +48,7 @@ class LoginPage extends StatelessWidget {
               txtLoginView(size: _size),
               formLoginView(size: _size),
               SizedBox(height: _size.height * .02),
-              Text("Tambien puedes ingresar con:"),
-              SizedBox(height: _size.height * .02),
-              Container(
-                  margin: EdgeInsets.symmetric(horizontal: 20),
-                  child: Divider()),
+            
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextButton(

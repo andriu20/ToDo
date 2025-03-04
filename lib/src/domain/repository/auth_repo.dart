@@ -1,11 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:todo/src/core/failure/failure.dart';
-import 'package:todo/src/domain/entities/user_entity.dart';
 
 abstract class AuthRepo {
-  Future<Either<Failure, UserEntity?>> registerWithEmail(
+  Future<Either<Failure, void>> registerWithEmail(
       {required String email, required String password});
-  Future<Either<Failure, UserEntity?>> loginWithEmail(
+  Future<Either<Failure, void>> loginWithEmail(
       {required String email, required String password});
   Future<Either<Failure, dynamic>> loginWithGoogle();
   Future<Either<Failure, bool>> checkSession();

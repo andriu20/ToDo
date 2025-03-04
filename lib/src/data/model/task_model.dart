@@ -14,7 +14,7 @@ class TaskModel extends TaskEntity {
     return TaskModel(
       id: json['id'],
       tittle: json['tittle'],
-      translatedText: json['translatedText'],
+      translatedText: json['translatedText']?? "",
       descripcion: json['descripcion'],
       completed: json['completed'],
       date: json['date'],

@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/get_it.dart';
 import 'package:todo/src/core/utils.dart';
 import 'package:todo/src/domain/dto/user_dto.dart';
 import 'package:todo/src/domain/repository/auth_repo.dart';
@@ -61,8 +63,8 @@ class RegisterCubit extends Cubit<RegisterState> {
         email: emailCtrl.text, password: passwordController.text);
     emit(state.copyWith(loading: false));
     registro.fold((l) {}, (r) async {
-      if (r!.uid.isNotEmpty) {
-        _crearUsuario(r.uid);
+      if (sl<FirebaseAuth>().currentUser != null) {
+        _crearUsuario(sl<FirebaseAuth>().currentUser!.uid);
         await authRepo.signOut();
         _goToLogin();
       }

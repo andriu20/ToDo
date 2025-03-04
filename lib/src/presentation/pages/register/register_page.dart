@@ -41,7 +41,6 @@ class RegisterPage extends StatelessWidget {
   Widget _body() => Column(
         children: [
           formRegisterView(size: _size),
-         
         ],
       );
 }

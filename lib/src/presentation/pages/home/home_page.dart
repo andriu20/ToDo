@@ -116,19 +116,14 @@ class HomePage extends StatelessWidget {
 
   Widget _option(BuildContext context, HomeCubit c) => SpeedDial(children: [
         speedDialWidget(
-          Icons.person_add,
+          Icons.add,
           'Crear tarea',
           () {
             _addNewTask(context: context, cubit: c);
           },
         ),
         speedDialWidget(
-          Icons.history_edu_outlined,
-          'Información de cuenta',
-          () {},
-        ),
-        speedDialWidget(
-          Icons.history_edu_outlined,
+          Icons.exit_to_app,
           'Cerrar sesión',
           () {
             c.singOut();

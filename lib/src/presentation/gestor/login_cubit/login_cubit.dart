@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:todo/get_it.dart';
 import 'package:todo/src/core/shared/shared.dart';
 import 'package:todo/src/core/utils.dart';
 import 'package:todo/src/data/model/user_model.dart';
@@ -51,11 +53,10 @@ class LoginCubit extends Cubit<LoginState> {
     emit(state.copyWith(loading: false));
 
     response.fold((l) {}, (r) {
-      if (r!.email.isNotEmpty) {
+      if (sl<FirebaseAuth>().currentUser != null) {
         Shared.setUserModel = UserModel(
-          uid: r.uid,
-          email: r.email,
-          creationTime: r.creationTime,
+          uid: sl<FirebaseAuth>().currentUser!.uid,
+          email: sl<FirebaseAuth>().currentUser!.email!,
         );
         goToHome();
       }

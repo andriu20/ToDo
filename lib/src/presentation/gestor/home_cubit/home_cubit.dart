@@ -97,9 +97,8 @@ class HomeCubit extends Cubit<HomeState> {
     Navigator.pop(state.context);
     emit(state.copyWith(loading: true));
     final response = await taskRepo.create(dto: _buildDto());
-    emit(state.copyWith(loading: false));
 
-    response.fold((l) {}, (r) {
+    response.fold((l) {}, (r) async {
       titleCtrl.clear();
       descriptionCtrl.clear();
       Utils.showSnackbar(state.context,
@@ -107,7 +106,12 @@ class HomeCubit extends Cubit<HomeState> {
           isError: !r);
 
       if (r) {
+        await Future.delayed(Duration(seconds: 3));
+        emit(state.copyWith(loading: false));
+
         _taskList();
+      } else {
+        emit(state.copyWith(loading: false));
       }
     });
   }
@@ -152,8 +156,7 @@ class HomeCubit extends Cubit<HomeState> {
   void singOut() async {
     await authRepo.signOut();
 
-    Shared.setUserModel =
-        UserModel(uid: "", email: "", creationTime: DateTime.now());
+    Shared.setUserModel = UserModel(uid: "", email: "");
 
     goLogin();
   }
